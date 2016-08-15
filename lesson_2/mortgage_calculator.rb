@@ -7,8 +7,6 @@ end
 def apr_estimate(score)
   annual_percentage_rate =
     if score <= 620
-      "12.5"
-    elsif score <= 660
       "8.5"
     elsif score <= 720
       "4.5"
@@ -38,8 +36,8 @@ def loan_duration_in_months(years)
   years * 12
 end
 
-def monthly_payment_calculator(loan_amount, monthly_interest, loan_length_months)
-  loan_amount * ((monthly_interest * 0.01) / (1 - (1 + (monthly_interest * 0.01))**-loan_length_months))
+def monthly_payment_calculator(loan_amount, monthly_interest, loan_length_month)
+  loan_amount * ((monthly_interest * 0.01) / (1 - (1 + (monthly_interest * 0.01))**-loan_length_month))
 end
 
 prompt("Loan Payment Estimator - See Your Monthly Payments Now!")
@@ -51,13 +49,14 @@ loop do
   name = gets().chomp()
 
   if name.empty?()
-    prompt("I like knowing who I am talking to, I am but a lonely robot. Please tell me your name.")
+    prompt("I like knowing who I am talking to, I am but a lonely robot.
+    Please tell me your name.")
   else
     break
   end
 end
 
-prompt("Hi, #{name}. Let's find out exactly how much your monthly payment will be.")
+prompt("Hi, #{name}. Let's find out how much your monthly payment will be.")
 sleep(1)
 
 prompt("First, I'm gonna need to ask you a few questions.")
@@ -69,7 +68,7 @@ loan_amount = ''
 loop do
   loan_amount = gets().chomp().gsub(/\D/, '')
   if number?(loan_amount)
-    prompt("Alright, #{name}. I see you are looking to borrow $#{loan_amount} dollars")
+    prompt("Alright, #{name}. I see you are looking to borrow $#{loan_amount}")
     break
   else
     prompt("Hmm... that doesn't look like a valid number")
@@ -86,7 +85,7 @@ loop do
   credit_score = gets().chomp().to_i
 
   if credit_score < 351 || credit_score > 800
-    prompt("Your credit score ranges from 350 - 800. Please enter a valid number")
+    prompt("Your credit score ranges from 350-800. Please enter a valid number")
   else
     break
   end
@@ -94,7 +93,7 @@ end
 
 annual_percentage_rate = apr_estimate(credit_score)
 
-prompt("Based on your Credit Score, your estimated APR is #{annual_percentage_rate}%")
+prompt("Based on your Credit Score, your APR is #{annual_percentage_rate}%")
 
 monthly_interest = monthly_interest_rate(annual_percentage_rate)
 
@@ -111,7 +110,7 @@ loop do
   end
 end
 
-loan_length_months = loan_duration_in_months(loan_duration)
+loan_length_month = loan_duration_in_months(loan_duration)
 
 prompt("Ok #{name}, I see you want the loan to last #{loan_duration} years")
 sleep(1)
@@ -119,7 +118,8 @@ sleep(1)
 prompt("Now we have everything we need to calculate your monthly payment...")
 sleep(1)
 
-monthly_payment = monthly_payment_calculator(loan_amount_for_calc, monthly_interest, loan_length_months)
+monthly_payment = monthly_payment_calculator(loan_amount_for_calc, monthly_interest, loan_length_month)
 monthly_payment = monthly_payment.round(2)
 
-prompt("Borrowing $#{loan_amount} dollars, at #{annual_percentage_rate}% APR over #{loan_duration} years will cost you $#{monthly_payment} monthly")
+prompt("Borrowing $#{loan_amount} dollars, at #{annual_percentage_rate}% APR
+over #{loan_duration} years will cost you $#{monthly_payment} monthly")
