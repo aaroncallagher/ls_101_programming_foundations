@@ -25,6 +25,7 @@ end
 def display_valid_choices(arr)
   arr.each do |word|
     if word[0] == 's'
+      # Two choices begin with s, so it displays first two letters instead of 1.
       prompt("#{word[0..1]} for #{word}")
     else
       prompt("#{word[0]} for #{word}")
@@ -40,8 +41,7 @@ loop do
   loop do
     prompt("Choose one:")
     display_valid_choices(VALID_CHOICES)
-    choice = Kernel.gets().chomp()
-    choice = case choice
+    choice = case Kernel.gets().chomp()
              when 'r'
                choice = 'rock'
              when 'p'
