@@ -52,8 +52,8 @@ def player_places_piece!(brd)
   brd[square] = PLAYER_MARKER
 end
 
-def computer_defense(line, board)
-  if board.values_at(*line).count(PLAYER_MARKER) == 2
+def computer_ai_moves(line, board, marker)
+  if board.values_at(*line).count(marker) == 2
     board.select{|key, val| line.include?(key) && val == INITIAL_MARKER}.keys.first
   else
     nil
@@ -63,8 +63,15 @@ end
 def computer_places_piece!(brd)
   square = nil
   WINNING_LINES.each do |line|
-    square = computer_defense(line, brd)
+    square = computer_ai_moves(line, brd, COMPUTER_MARKER)
     break if square
+  end
+  
+  if !square
+    WINNING_LINES.each do |line|
+      square = computer_ai_moves(line, brd, PLAYER_MARKER)
+      break if square
+    end
   end
   
   if !square
