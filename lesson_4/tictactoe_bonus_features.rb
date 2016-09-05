@@ -63,17 +63,19 @@ end
 
 def computer_places_piece!(brd)
   square = nil
+  # Attack to win
   WINNING_LINES.each do |line|
     square = computer_ai_moves(line, brd, COMPUTER_MARKER)
     break if square
   end
-
+  # Defend against imminent loss
   WINNING_LINES.each do |line|
     square ||= computer_ai_moves(line, brd, PLAYER_MARKER)
     break if square
   end
-
+  # Use Middle Square
   square ||= 5 if brd[5] == INITIAL_MARKER
+  # select random if none available
   square ||= empty_squares(brd).sample
   brd[square] = COMPUTER_MARKER
 end
