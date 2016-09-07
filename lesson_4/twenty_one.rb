@@ -28,18 +28,17 @@ end
 
 def total(cards)
   card_value = cards.map { |card| card[0] }
-
   total = 0
   card_value.each do |val|
-    if val == 'A'
-      total += 11
-    elsif val == 'J' || val == 'Q' || val == 'K'
-      total += 10
-    else
-      total += val.to_i
-    end
+    total +=
+      if val == 'A'
+        11
+      elsif val == 'J' || val == 'Q' || val == 'K'
+        10
+      else
+        val.to_i
+      end
   end
-
   card_value.select { |val| val == 'A' }.count.times do
     total -= 10 if total > UPPER_LIMIT
   end
@@ -95,10 +94,10 @@ def calculate_winner(player_total, dealer_total)
     'tie'
   end
 end
-  
+
 def display_winner(player_cards, dealer_cards)
   result = calculate_winner(player_cards, dealer_cards)
-  
+
   case result
   when "player"
     prompt("You Win!")
@@ -121,7 +120,6 @@ def play_again?
 end
 
 # Main Game Loop
-
 loop do
   prompt("Welcome to 21. No Splits, No Doubling Down, Just You vs. the Dealer")
   sleep(1)
@@ -135,7 +133,7 @@ loop do
   prompt("Total: #{total(player_cards)}")
   sleep(1)
   prompt("Dealers Cards: #{display_dealer_cards(dealer_cards)}")
-
+  
   loop do
     player_turn(current_deck, player_cards)
     if bust?(total(player_cards))
@@ -148,7 +146,7 @@ loop do
       break
     end
     prompt("You both stayed. Calculating Results...")
-    prompt("Your Total: #{total(player_cards)} | Dealer: #{total(dealer_cards)}")
+    prompt("Your Total #{total(player_cards)} | Dealer #{total(dealer_cards)}")
     display_winner(total(player_cards), total(dealer_cards))
   end
   break if play_again? == 'no'
