@@ -113,7 +113,7 @@ def play_again?
   loop do
     prompt("Play Again? Yes or No?")
     answer = gets.chomp.downcase
-    break if %w(yes no).include?(answer)
+    break if %w(y yes n no).include?(answer)
     prompt("Please Answer Yes or No")
   end
   answer
@@ -150,6 +150,6 @@ loop do
     display_winner(total(player_cards), total(dealer_cards))
     break
   end
-  break if play_again? == 'no'
+  break if play_again? == 'no' || play_again? == 'n'
 end
 prompt("Thank You for Playing 21. Good-Bye!")
