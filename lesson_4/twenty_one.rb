@@ -119,9 +119,9 @@ def play_again?
   answer
 end
 
+prompt("Welcome to 21. No Splits, No Doubling Down, Just You vs. the Dealer")
 # Main Game Loop
 loop do
-  prompt("Welcome to 21. No Splits, No Doubling Down, Just You vs. the Dealer")
   sleep(1)
   # Initalize / Reset Deck
   current_deck = initialize_deck
@@ -133,7 +133,7 @@ loop do
   prompt("Total: #{total(player_cards)}")
   sleep(1)
   prompt("Dealers Cards: #{display_dealer_cards(dealer_cards)}")
-  
+
   loop do
     player_turn(current_deck, player_cards)
     if bust?(total(player_cards))
@@ -148,6 +148,7 @@ loop do
     prompt("You both stayed. Calculating Results...")
     prompt("Your Total #{total(player_cards)} | Dealer #{total(dealer_cards)}")
     display_winner(total(player_cards), total(dealer_cards))
+    break
   end
   break if play_again? == 'no'
 end
